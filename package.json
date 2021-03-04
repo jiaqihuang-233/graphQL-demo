@@ -1,0 +1,23 @@
+{
+  "name": "graphql-demo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Jackie Huang <jhuang@pdftron.com>",
+  "license": "MIT",
+  "dependencies": {
+    "apollo-server-express": "^2.21.0",
+    "express": "^4.17.1",
+    "graphql": "^15.5.0",
+    "typeorm": "^0.2.31"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.11",
+    "@types/node": "^14.14.31",
+    "nodemon": "^2.0.7",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.2"
+  },
+  "scripts": {
+    "start": "nodemon --exec ts-node src/server/index.ts"
+  }
+}
