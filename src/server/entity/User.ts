@@ -21,6 +21,6 @@ export class User {
   @JoinTable()
   gamesInLibrary: Game[];
 
-  @OneToMany(() => Review, (review) => review.user)
+  @OneToMany(() => Review, (review) => review.reviewer)
   reviews: Review[];
 }

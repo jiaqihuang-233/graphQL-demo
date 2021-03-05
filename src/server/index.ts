@@ -1,54 +1,27 @@
-const express = require('express');
-const { ApolloServer, gql } = require('apollo-server-express');
+import express from 'express';
+import { ApolloServer, gql } from 'apollo-server-express';
+import Query from './resolvers/Queries';
+import { createConnection } from './util/connection';
+import typeDefs from './typeDefs';
+import { getManager } from 'typeorm';
 
-const typeDefs = gql`
-  type Game {
-    id: ID!
-    title: String!
-    price: Float!
-    averageRating: Int
-    Users: [User!]!
-  }
+const main = async () => {
+  await createConnection();
+  const entityManager = getManager();
 
-  type User {
-    id: ID!
-    name: String!
-    gamesInLibrary: [Game!]!
-    reviews: [Review!]!
-  }
+  const resolvers = {
+    Query
+    // Mutation,
+    // Subscription
+  };
 
-  type Review {
-    id: ID!
-    user: User!
-    game: Game!
-    """
-    An integer between 1 and 5 inclusive
-    """
-    rating: Int!
-  }
-
-  type Query {
-    hello: String
-    game(id: ID, title: String!): Game
-    user(id: ID!): User
-    review(userId: ID!, gameId: ID!): Review
-  }
-  type Mutation {
-    changeGreeting(newGreeting: String): String
-  }
-`;
-
-const resolvers = {
-  Query: {
-    hello: () => 'Hello world!'
-  },
-  Mutation: {
-    changeGreeting: (parent, args, context, info) => args.newGreeting
-  }
-};
-
-(async () => {
-  const server = new ApolloServer({ typeDefs, resolvers });
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    context: () => ({
+      entityManager
+    })
+  });
 
   const app = express();
   server.applyMiddleware({ app });
@@ -56,4 +29,6 @@ const resolvers = {
   app.listen({ port: 8000 }, () =>
     console.log(`🚀 Server ready at http://localhost:8000${server.graphqlPath}`)
   );
-})();
+};
+
+main();

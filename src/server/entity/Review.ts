@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, JoinColumn } from 'typeorm';
 import { Game } from './Game';
 import { User } from './User';
 
@@ -7,12 +7,13 @@ export class Review {
   @PrimaryGeneratedColumn()
   id: string;
 
-  @Column()
+  @OneToOne(() => Game)
+  @JoinColumn()
   game: Game;
 
   @Column()
   rating: number;
 
   @ManyToOne(() => User, (user) => user.reviews)
-  user: User;
+  reviewer: User;
 }
