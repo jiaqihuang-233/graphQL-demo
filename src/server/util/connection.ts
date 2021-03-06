@@ -1,12 +1,12 @@
 import { ConnectionOptions, getConnectionManager } from 'typeorm';
-import { User } from '../entity/User';
-import { Game } from '../entity/Game';
-import { Review } from '../entity/Review';
+import User from '../entity/User';
+import Game from '../entity/Game';
+import Review from '../entity/Review';
 
 const createConnection = async () => {
   const options: ConnectionOptions = {
     type: 'sqlite',
-    database: `./:memory:`,
+    database: './db.sqlite3',
     entities: [User, Game, Review],
     synchronize: true,
     logging: true

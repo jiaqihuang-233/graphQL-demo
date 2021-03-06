@@ -1,23 +1,21 @@
+import 'reflect-metadata';
 import express from 'express';
-import { ApolloServer, gql } from 'apollo-server-express';
-import Query from './resolvers/Query';
-import Mutation from './resolvers/Mutation';
+import { ApolloServer } from 'apollo-server-express';
 import { createConnection } from './util/connection';
-import typeDefs from './typeDefs';
-import { getManager } from 'typeorm';
+import { buildSchema } from 'type-graphql';
+import { GameResolver } from './resolvers/gameResolvers';
+import { UserResolver } from './resolvers/userResolvers';
+import { ReviewResolver } from './resolvers/reviewResolvers';
 
 const main = async () => {
   await createConnection();
 
-  const resolvers = {
-    Query,
-    Mutation,
-    // Subscription
-  };
+ 
 
   const server = new ApolloServer({
-    typeDefs,
-    resolvers
+    schema: await buildSchema({
+      resolvers: [GameResolver, UserResolver, ReviewResolver]
+    })
   });
 
   const app = express();

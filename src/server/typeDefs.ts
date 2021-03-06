@@ -4,9 +4,8 @@ export default gql`
   type Game {
     id: ID!
     title: String!
-    price: Float!
+    averageRating: Int!
     reviews: [Review!]!
-    users: [User!]!
   }
 
   type User {
