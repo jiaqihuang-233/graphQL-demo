@@ -1,26 +1,23 @@
 import express from 'express';
 import { ApolloServer, gql } from 'apollo-server-express';
-import Query from './resolvers/Queries';
+import Query from './resolvers/Query';
+import Mutation from './resolvers/Mutation';
 import { createConnection } from './util/connection';
 import typeDefs from './typeDefs';
 import { getManager } from 'typeorm';
 
 const main = async () => {
   await createConnection();
-  const entityManager = getManager();
 
   const resolvers = {
-    Query
-    // Mutation,
+    Query,
+    Mutation,
     // Subscription
   };
 
   const server = new ApolloServer({
     typeDefs,
-    resolvers,
-    context: () => ({
-      entityManager
-    })
+    resolvers
   });
 
   const app = express();

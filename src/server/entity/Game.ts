@@ -3,14 +3,15 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToMany,
-  JoinTable
+  JoinTable,
+  OneToMany
 } from 'typeorm';
 import { User } from './User';
-
+import { Review } from './Review';
 @Entity()
 export class Game {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   title: string;
@@ -18,10 +19,12 @@ export class Game {
   @Column()
   price: number;
 
-  @Column()
-  averageRating: number;
+  @OneToMany(() => Review, (review) => review.game)
+  @JoinTable()
+  reviews: Review[];
 
-  @ManyToMany(() => User)
+  //@TODO
+  @ManyToMany(() => User, (user) => user.gamesInLibrary)
   @JoinTable()
   users: User[];
 }

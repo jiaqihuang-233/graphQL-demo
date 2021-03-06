@@ -4,11 +4,10 @@ import { User } from './User';
 
 @Entity()
 export class Review {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @OneToOne(() => Game)
-  @JoinColumn()
+  @ManyToOne(() => Game, (game) => game.reviews)
   game: Game;
 
   @Column()

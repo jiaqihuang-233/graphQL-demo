@@ -6,7 +6,7 @@ import { Review } from '../entity/Review';
 const createConnection = async () => {
   const options: ConnectionOptions = {
     type: 'sqlite',
-    database: `:memory:`,
+    database: `./:memory:`,
     entities: [User, Game, Review],
     synchronize: true,
     logging: true
