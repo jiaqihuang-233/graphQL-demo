@@ -11,7 +11,11 @@ import {
   Root,
   Int,
   Args,
-  ArgsType
+  ArgsType,
+  Subscription,
+  ObjectType,
+  PubSub,
+  PubSubEngine
 } from 'type-graphql';
 import User from '../entity/User';
 import Game from '../entity/Game';
@@ -42,6 +46,13 @@ class NewReviewInput {
   comment: string;
 }
 
+const NEW_REVIEW_ADDED_EVENT = 'NEW_REVIEW_ADDED';
+ @ArgsType()
+ class NewReviewArgs {
+   @Field(() => [ID])
+   subscribedGameIds: string[];
+ }
+
 @Resolver(() => Review)
 export class ReviewResolver {
   private userService: Repository<User>;
@@ -70,7 +81,8 @@ export class ReviewResolver {
 
   @Mutation(() => Review)
   async addReview(
-    @Arg('input') input: NewReviewInput
+    @Arg('input') input: NewReviewInput,
+    @PubSub() pubsub: PubSubEngine
   ): Promise<Review | undefined> {
     const { gameId, reviewerId, rating, comment } = input;
     const reviewer = this.userService.findOne(reviewerId, {
@@ -78,12 +90,14 @@ export class ReviewResolver {
     });
     const game = this.gameService.findOne(gameId);
     if (!reviewer || !game) throw new Error('no game or user');
-    return this.reviewService.save({
+    const newReview = await this.reviewService.save({
       gameId,
       reviewerId,
       rating,
       comment
     });
+    pubsub.publish(NEW_REVIEW_ADDED_EVENT, newReview);
+    return newReview;
   }
 
   @FieldResolver()
@@ -94,5 +108,20 @@ export class ReviewResolver {
   @FieldResolver()
   async reviewer(@Root() review: Review): Promise<User | undefined> {
     return this.userService.findOne(review.reviewerId);
+  }
+
+  @Subscription({
+    topics: NEW_REVIEW_ADDED_EVENT,
+    filter: ({ payload, args }) => {
+      const { subscribedGameIds } = args;
+      if(!subscribedGameIds || subscribedGameIds.length === 0) return true;
+      return subscribedGameIds.includes(payload.gameId);
+    }
+  })
+  newReviewAdded(
+    @Root() newReviewPayload: Review,
+    @Args() args: NewReviewArgs
+  ): Review {
+    return newReviewPayload;
   }
 }

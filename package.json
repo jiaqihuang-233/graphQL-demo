@@ -5,12 +5,14 @@
   "author": "Jackie Huang <jhuang@pdftron.com>",
   "license": "MIT",
   "dependencies": {
+    "@apollo/client": "^3.3.11",
     "apollo-server-express": "^2.21.0",
     "class-validator": "^0.13.1",
     "express": "^4.17.1",
     "graphql": "^15.5.0",
     "reflect-metadata": "^0.1.13",
     "sqlite3": "^5.0.2",
+    "subscriptions-transport-ws": "^0.9.18",
     "type-graphql": "^1.1.1",
     "typeorm": "^0.2.31",
     "uuid": "^8.3.2"

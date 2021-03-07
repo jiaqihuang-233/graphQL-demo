@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, RelationId, ManyToOne, BaseEntity } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, RelationId, ManyToOne, BaseEntity, CreateDateColumn } from 'typeorm';
 import Game from './Game';
 import User from './User';
 import { Field, ObjectType, Int, ID } from 'type-graphql';
@@ -30,4 +30,8 @@ export default class Review extends BaseEntity {
   @Column()
   @RelationId((review: Review) => review.reviewer)
   reviewerId: string;
+
+  @Field()
+  @CreateDateColumn()
+  dateCreated: Date;
 }
