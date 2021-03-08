@@ -16,7 +16,10 @@ const main = async () => {
   const server = new ApolloServer({
     schema: await buildSchema({
       resolvers: [GameResolver, UserResolver, ReviewResolver]
-    })
+    }),
+    subscriptions: {
+      path: '/subscriptions'
+    },
   });
 
   const app = express();
