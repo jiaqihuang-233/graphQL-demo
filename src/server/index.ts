@@ -15,11 +15,16 @@ const main = async () => {
 
   const server = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [GameResolver, UserResolver, ReviewResolver]
+      resolvers: [GameResolver, UserResolver, ReviewResolver],
+      emitSchemaFile: {
+        path: 'src/graphql/schema.gql',
+        commentDescriptions: true,
+        sortedSchema: false // by default the printed schema is sorted alphabetically
+      }
     }),
     subscriptions: {
       path: '/subscriptions'
-    },
+    }
   });
 
   const app = express();
