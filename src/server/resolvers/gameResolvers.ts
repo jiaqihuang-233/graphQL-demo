@@ -49,4 +49,15 @@ export class GameResolver {
       }
     });
   }
+
+  @FieldResolver()
+  async averageRating(@Root() game: Game): Promise<number | null> {
+    const reviews = await this.reviews(game);
+    const count = reviews.length;
+    if (count === 0) return null;
+    const sum = reviews
+      .map((review) => review.rating)
+      .reduce((a, b) => a + b, 0);
+    return sum / count;
+  }
 }

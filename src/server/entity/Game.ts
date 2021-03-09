@@ -38,13 +38,5 @@ export default class Game extends BaseEntity {
   reviews: Review[];
 
   @Field(() => Float, { nullable: true })
-  get averageRating(): number | null {
-    // const count = this.reviews.length;
-    // if (count === 0) return null;
-    // const sum = this.reviews
-    //   .map((review) => review.rating)
-    //   .reduce((a, b) => a + b, 0);
-    // return sum / count;
-    return 0;
-  }
+  averageRating: number | null 
 }
