@@ -22,10 +22,10 @@ export default class User extends BaseEntity {
   @Column()
   name: string;
 
-  @Field(() => [Game])
-  @ManyToMany(() => Game)
-  @JoinTable()
-  gamesInLibrary: Game[];
+  // @Field(() => [Game])
+  // @ManyToMany(() => Game)
+  // @JoinTable()
+  // gamesInLibrary: Game[];
 
   @Field(() => [Review])
   @OneToMany(() => Review, (review) => review.reviewer)

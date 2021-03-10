@@ -48,29 +48,29 @@ export class UserResolver {
     return await this.userService.save({ name: input.name });
   }
 
-  @Mutation(() => User)
-  async purchaseGame(
-    @Arg('input') input: GamePurchaseInput
-  ): Promise<User | undefined> {
-    const { gameId, userId } = input;
-    const user = await this.userService.findOne(userId);
-    const game = await getRepository(Game).findOne(gameId);
-    if (!user || !game) throw new Error(' user or game not found');
-    return await this.userService.save({
-      ...user,
-      gamesInLibrary: [...(user?.gamesInLibrary || []), game]
-    });
-  }
+  // @Mutation(() => User)
+  // async purchaseGame(
+  //   @Arg('input') input: GamePurchaseInput
+  // ): Promise<User | undefined> {
+  //   const { gameId, userId } = input;
+  //   const user = await this.userService.findOne(userId);
+  //   const game = await getRepository(Game).findOne(gameId);
+  //   if (!user || !game) throw new Error(' user or game not found');
+  //   return await this.userService.save({
+  //     ...user,
+  //     gamesInLibrary: [...(user?.gamesInLibrary || []), game]
+  //   });
+  // }
 
-  @FieldResolver()
-  async gamesInLibrary(@Root() user: User) {
-    //load users with games inside
-    const foundUser = await this.userService.findOne({
-      where: { id: user.id },
-      relations: ['gamesInLibrary']
-    });
-    return foundUser?.gamesInLibrary || [];
-  }
+  // @FieldResolver()
+  // async gamesInLibrary(@Root() user: User) {
+  //   //load users with games inside
+  //   const foundUser = await this.userService.findOne({
+  //     where: { id: user.id },
+  //     relations: ['gamesInLibrary']
+  //   });
+  //   return foundUser?.gamesInLibrary || [];
+  // }
 
   @FieldResolver()
   async reviews(@Root() user: User) {

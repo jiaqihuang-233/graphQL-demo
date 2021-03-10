@@ -14,6 +14,7 @@ type Game {
   id: ID!
   title: String!
   price: Float!
+  imageUrl: String
   reviews: [Review!]!
   averageRating: Float
 }
@@ -30,7 +31,6 @@ type Review {
 type User {
   id: ID!
   name: String!
-  gamesInLibrary: [Game!]!
   reviews: [Review!]!
 }
 
@@ -39,23 +39,26 @@ scalar DateTime
 
 type Mutation {
   addGame(input: NewGameInput!): Game!
+  editGame(input: EditGameInput!): Game!
   addUser(input: NewUserInput!): User!
-  purchaseGame(input: GamePurchaseInput!): User!
   addReview(input: NewReviewInput!): Review!
 }
 
 input NewGameInput {
   title: String!
   price: Float!
+  imageUrl: String
+}
+
+input EditGameInput {
+  id: ID!
+  title: String
+  price: Float
+  imageUrl: String
 }
 
 input NewUserInput {
   name: String!
-}
-
-input GamePurchaseInput {
-  gameId: ID!
-  userId: ID!
 }
 
 input NewReviewInput {

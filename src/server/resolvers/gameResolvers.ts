@@ -21,7 +21,26 @@ class NewGameInput {
 
   @Field(() => Float)
   price: number;
+
+  @Field({ nullable: true })
+  imageUrl?: string;
 }
+
+@InputType()
+class EditGameInput {
+  @Field(type => ID)
+  id: string;
+
+  @Field({ nullable: true })
+  title: string;
+
+  @Field(() => Float, { nullable: true })
+  price: number;
+
+  @Field({ nullable: true })
+  imageUrl: string;
+}
+
 
 @Resolver(() => Game)
 export class GameResolver {
@@ -37,8 +56,19 @@ export class GameResolver {
 
   @Mutation(() => Game)
   async addGame(@Arg('input') input: NewGameInput): Promise<Game> {
-    const { title, price } = input;
-    return await getRepository(Game).save({ title, price });
+    const { title, price, imageUrl } = input;
+    return await getRepository(Game).save({ title, price, imageUrl });
+  }
+
+  @Mutation(()=> Game)
+  async editGame(@Arg('input') input: EditGameInput): Promise<Game> {
+    const { id } = input;
+    const game = await getRepository(Game).findOne(input.id);
+    if(!game) throw new Error('Game not found');
+    return await getRepository(Game).save({
+      ...game,
+      ...input
+    });
   }
 
   @FieldResolver()
