@@ -1,6 +1,15 @@
 import { gql, useQuery } from '@apollo/client';
+import { User } from '../../../graphql/resolvers-types';
+import { useState, useMemo } from 'react';
 
-export default function useUserInfoQuery (userId: string) {
+export type useUserInfoQueryResult = [boolean, User | undefined];
+
+export default function useUserInfoQuery(
+  userId: string
+): useUserInfoQueryResult {
+  const [data, setData] = useState<User>();
+  const [loading, setLoading] = useState<boolean>(true);
+
   const GET_USER_REVIEWS = gql`
     query user($userId: ID!) {
       user(id: $userId) {
@@ -10,19 +19,17 @@ export default function useUserInfoQuery (userId: string) {
           id
           rating
         }
-        gamesInLibrary {
-          id
-          title
-          price
-        }
       }
     }
   `;
 
-  const { loading, error, data } = useQuery(GET_USER_REVIEWS, {
-    variables: { userId }
+  useQuery(GET_USER_REVIEWS, {
+    variables: { userId },
+    onCompleted: (data) => {
+      setData(data.user);
+      setLoading(false);
+    }
   });
 
-  return [loading, data];
+  return useMemo(() => [loading, data], [data, loading]);
 }
-
