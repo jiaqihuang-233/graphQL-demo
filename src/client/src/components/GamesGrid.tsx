@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { gql, useQuery } from '@apollo/client';
-import { Spinner, Grid, GridItem, Box } from "@chakra-ui/react"
+import { Spinner, SimpleGrid, GridItem, Box } from "@chakra-ui/react"
 
 export default function GamesGrid() {
   const GET_ALL_GAMES = gql`
@@ -28,7 +28,7 @@ export default function GamesGrid() {
       )}
 
       {data && data.getAllGames && (
-        <Grid templateColumns="repeat(5, 1fr)" gap={6}>
+        <SimpleGrid minChildWidth="120px" spacing="40px">
           {data.getAllGames.map((game: any) => (
             <Box
               key={game.id}
@@ -42,7 +42,7 @@ export default function GamesGrid() {
               {game.title}{' '}
             </Box>
           ))}
-        </Grid>
+        </SimpleGrid>
       )}
     </div>
   );
