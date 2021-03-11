@@ -1,7 +1,10 @@
-import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { ApolloClient, from, InMemoryCache } from '@apollo/client';
 import { split, HttpLink } from '@apollo/client';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { WebSocketLink } from '@apollo/client/link/ws';
+import { onError } from '@apollo/client/link/error';
+
+
 
 export const initApolloClient = () => {
   const httpLink = new HttpLink({
@@ -13,6 +16,17 @@ export const initApolloClient = () => {
     options: {
       reconnect: true
     }
+  });
+
+  // Log any GraphQL errors or network error that occurred
+  const errorLink = onError(({ graphQLErrors, networkError }) => {
+    if (graphQLErrors)
+      graphQLErrors.map(({ message, locations, path }) =>
+        console.log(
+          `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+        )
+      );
+    if (networkError) console.log(`[Network error]: ${networkError}`);
   });
 
   // The split function takes three parameters:
@@ -33,7 +47,7 @@ export const initApolloClient = () => {
   );
 
   return new ApolloClient({
-    link: splitLink,
+    link: from([splitLink, errorLink]),
     cache: new InMemoryCache()
   });
 }

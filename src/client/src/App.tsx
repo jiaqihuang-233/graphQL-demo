@@ -6,6 +6,7 @@ import GamesGrid from './components/GamesGrid';
 import MyReviewsList from './components/MyReviewsList';
 import NewReviewsList from './components/NewReviewsList';
 import TopNavBar from './components/TopNavBar';
+import GenerateReviews from './components/GenerateReviews';
 
 const currentUserId = '9674e69f-f971-4bc7-9aff-c02db3bec3c6';
 
@@ -17,14 +18,18 @@ export default function App() {
           <TopNavBar />
           <Flex justifyContent="space-between">
             <Switch>
+              <Route path={['/gr']}>
+                <GenerateReviews />
+              </Route>
               <Route path="/my-reviews">
-                  <MyReviewsList />
+                <MyReviewsList />
+                <NewReviewsList />
               </Route>
               <Route path={['/', '/games']}>
                 <GamesGrid />
+                <NewReviewsList />
               </Route>
             </Switch>
-            <NewReviewsList />
           </Flex>
         </div>
       </Auth>

@@ -120,8 +120,3 @@ export type Subscription = {
   __typename?: 'Subscription';
   newReviewAdded: Review;
 };
-
-
-export type SubscriptionNewReviewAddedArgs = {
-  subscribedGameIds: Array<Scalars['ID']>;
-};

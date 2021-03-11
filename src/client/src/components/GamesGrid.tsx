@@ -17,7 +17,9 @@ export default function GamesGrid() {
     }
   `;  
   
-  const { loading, data } = useQuery(GET_ALL_GAMES);
+  const { loading, data } = useQuery(GET_ALL_GAMES, {
+    fetchPolicy: 'no-cache'
+  });
   return (
     <Box flexGrow={2} width="60%">
       {loading && (

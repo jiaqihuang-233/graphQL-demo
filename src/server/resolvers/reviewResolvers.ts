@@ -47,11 +47,6 @@ class NewReviewInput {
 }
 
 const NEW_REVIEW_ADDED_EVENT = 'NEW_REVIEW_ADDED';
- @ArgsType()
- class NewReviewArgs {
-   @Field(() => [ID])
-   subscribedGameIds: string[];
- }
 
 @Resolver(() => Review)
 export class ReviewResolver {
@@ -84,6 +79,7 @@ export class ReviewResolver {
     @Arg('input') input: NewReviewInput,
     @PubSub() pubsub: PubSubEngine
   ): Promise<Review | undefined> {
+
     const { gameId, reviewerId, rating, comment } = input;
     const reviewer = this.userService.findOne(reviewerId, {
       relations: ['reviews']
@@ -113,16 +109,10 @@ export class ReviewResolver {
   }
 
   @Subscription({
-    topics: NEW_REVIEW_ADDED_EVENT,
-    filter: ({ payload, args }) => {
-      const { subscribedGameIds } = args;
-      if(!subscribedGameIds || subscribedGameIds.length === 0) return true;
-      return subscribedGameIds.includes(payload.gameId);
-    }
+    topics: NEW_REVIEW_ADDED_EVENT
   })
   newReviewAdded(
-    @Root() newReviewPayload: Review,
-    @Args() args: NewReviewArgs
+    @Root() newReviewPayload: Review
   ): Review {
     return newReviewPayload;
   }

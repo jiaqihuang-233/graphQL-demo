@@ -5,11 +5,12 @@ import { StarIcon } from '@chakra-ui/icons';
 type ReviewBoxProps = {
   review: Review;
   showReviewer: boolean;
+  truncate?: boolean;
 };
-export default function ReviewBox({ review, showReviewer }: ReviewBoxProps) {
+export default function ReviewBox({ review, showReviewer, truncate }: ReviewBoxProps) {
   const { game, rating, comment, dateCreated, reviewer } = review;
+
   const date = new Date(dateCreated);
-  console.log(review);
   if (!game) return null;
   return (
     <Flex
@@ -70,7 +71,7 @@ export default function ReviewBox({ review, showReviewer }: ReviewBoxProps) {
             </Box>
           </Box>
         </Flex>
-        <Box p={2}>{comment}</Box>
+        <Box p={2}>{ truncate ? (comment.substring(0, 150) + '...') : comment}</Box>
       </Box>
     </Flex>
   );

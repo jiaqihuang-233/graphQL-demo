@@ -69,5 +69,5 @@ input NewReviewInput {
 }
 
 type Subscription {
-  newReviewAdded(subscribedGameIds: [ID!]!): Review!
+  newReviewAdded: Review!
 }

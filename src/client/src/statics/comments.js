@@ -1,0 +1,8 @@
+export const comments = [
+  'A significant chunk of the player base is not happy with the fact that expansions are kinda rare (I believe twice a year, bringing 70 new cards), but I am one who is OK with that. I prefer a stale meta once in a while over expansions evry 2-3 months, filled with useless cards designed only to drain your wallet.',
+  `The game was struggling with balance before, but the meta was never as annoying as it is right now. Ever since the release of WotW, even though diverse, the meta is incredibly binary in the sense that some decks just beat others on paper if luck of the draw doesn't incredibly favor you. This makes for a really bad "rock-paper-scissors" kind of feel to the game's matchups.`,
+  `Do you remember how much time you spent playing Gwent in Witcher 3? I remember, it was a lot of time, i've got all the cards and won the tournament. It was one the best mini-games i've played. So CDPR thought “why not make this a standalone game?” and they made this come true.,
+  `,
+  `Graphically the game looks fantastic. I especially love the animated cards. There's not much to talk about graphics, it's a card game after all. I have no complaints except for no ultrawide support. A little annoying, I think it would be possible to add ultrawide support, it doesn't need to be perfect, just add some generic stuff, repeating textures or something on the edges, that's it.`,
+  `When it comes to card games the most important thing is without a doubt gameplay and balancing. The gameplay of Gwent is quite simple and very familiar to anyone who has played Gwent in The Witcher 3: Wild Hunt.`
+];

@@ -6,12 +6,12 @@ import ReviewBox from './ReviewBox';
 
 export default function NewReviewsList() {
   const [latestReviews, setLatestReviews] = useState<Review[]>([]);
-  const MAX_LIST_LENGTH = 10;
+  const MAX_LIST_LENGTH = 3;
 
   //save most recent 10 new reviews
   const REVIEW_SUBSCRIPTION = gql`
-    subscription newReviewAdded($subscribedGameIds: [ID!]!) {
-      newReviewAdded(subscribedGameIds: $subscribedGameIds) {
+    subscription newReviewAdded {
+      newReviewAdded {
         id
         comment
         game {
@@ -28,7 +28,6 @@ export default function NewReviewsList() {
   `;
 
   const { loading } = useSubscription(REVIEW_SUBSCRIPTION, {
-    variables: { subscribedGameIds: [] },
     onSubscriptionData: ({ subscriptionData }) => {
       const currentReviews = [...latestReviews];
       if (currentReviews.length === MAX_LIST_LENGTH) {
@@ -49,7 +48,7 @@ export default function NewReviewsList() {
 
         {!loading &&
           latestReviews.map((review) => (
-            <ReviewBox key={review.id} review={review} showReviewer={true} />
+            <ReviewBox key={review.id} review={review} showReviewer={true} truncate={true}/>
           ))}
       </Flex>
     </Box>
