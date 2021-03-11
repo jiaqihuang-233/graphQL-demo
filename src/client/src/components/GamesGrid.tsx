@@ -1,6 +1,6 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React from 'react';
 import { gql, useQuery } from '@apollo/client';
-import { Spinner, SimpleGrid, GridItem, Box } from "@chakra-ui/react"
+import { Spinner, SimpleGrid, Box } from "@chakra-ui/react"
 import GameBox from './GameBox';
 import { Game } from '../../../graphql/resolvers-types';
 

@@ -1,10 +1,9 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { Box, Button, Flex, Stack, Divider } from '@chakra-ui/react';
+import React, { useState } from 'react';
+import { Button } from '@chakra-ui/react';
 import { gql, useQuery, useMutation } from '@apollo/client';
 import faker from 'faker';
 import { comments } from '../statics/comments';
 import { Game } from '../../../graphql/resolvers-types';
-import { AdvancedConsoleLogger } from 'typeorm';
 
 async function delay(ms: number) {
   // return await for better async stack trace support in case of errors.

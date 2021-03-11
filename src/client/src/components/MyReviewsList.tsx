@@ -1,6 +1,5 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { gql, useQuery } from '@apollo/client';
-import { Spinner, VStack, Box, StackDivider, Stack } from '@chakra-ui/react';
+import React, { useContext } from 'react';
+import { Box, Stack } from '@chakra-ui/react';
 import UserContext from '../context/user';
 import ReviewBox from './ReviewBox';
 import { Review } from '../../../graphql/resolvers-types';

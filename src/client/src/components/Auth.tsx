@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 import useUserInfoQuery from '../hooks/useUserInfoQuery';
 import UserContext from '../context/user';
-import { Box, Spinner } from '@chakra-ui/react';
+import { Spinner } from '@chakra-ui/react';
 
 interface AuthProps {
   children: any;
