@@ -23,7 +23,7 @@ class NewGameInput {
   price: number;
 
   @Field({ nullable: true })
-  imageUrl?: string;
+  imageUrl: string;
 }
 
 @InputType()

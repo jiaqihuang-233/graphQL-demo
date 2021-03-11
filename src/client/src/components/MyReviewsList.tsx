@@ -1,27 +1,27 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { gql, useQuery } from '@apollo/client';
-import { Spinner, VStack, Box, StackDivider } from '@chakra-ui/react';
+import { Spinner, VStack, Box, StackDivider, Stack } from '@chakra-ui/react';
 import UserContext from '../context/user';
+import ReviewBox from './ReviewBox';
+import { Review } from '../../../graphql/resolvers-types';
 
 export default function MyReviewsList() {
   const user = useContext(UserContext);
-  console.log('user reviews', user)
   return (
-    <div>
+    <Box flexGrow={2} width="60%">
       {user && (
-        <VStack
-          divider={<StackDivider borderColor="gray.200" />}
-          spacing={4}
-          align="stretch"
+        <Stack
+          // divider={<StackDivider borderColor="gray" />}
+          spacing={8}
+          // align="stretch"
+          m={10}
         >
           {' '}
-          {user.reviews.map((review: any) => (
-            <Box key={review.id} h="40px" bg="yellow.200">
-              {JSON.stringify(review)}
-            </Box>
+          {user.reviews.map((review: Review) => (
+            <ReviewBox key={review.id} review={review} showReviewer={false} />
           ))}
-        </VStack>
+        </Stack>
       )}
-    </div>
+    </Box>
   );
 }

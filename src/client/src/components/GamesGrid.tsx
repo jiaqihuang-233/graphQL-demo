@@ -1,6 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import { Spinner, SimpleGrid, GridItem, Box } from "@chakra-ui/react"
+import GameBox from './GameBox';
+import { Game } from '../../../graphql/resolvers-types';
 
 export default function GamesGrid() {
   const GET_ALL_GAMES = gql`
@@ -10,13 +12,14 @@ export default function GamesGrid() {
         id
         averageRating
         price
+        imageUrl
       }
     }
   `;  
   
-  const { loading, error, data } = useQuery(GET_ALL_GAMES);
+  const { loading, data } = useQuery(GET_ALL_GAMES);
   return (
-    <div>
+    <Box flexGrow={2} width="60%">
       {loading && (
         <Spinner
           thickness="4px"
@@ -28,22 +31,12 @@ export default function GamesGrid() {
       )}
 
       {data && data.getAllGames && (
-        <SimpleGrid minChildWidth="120px" spacing="40px">
-          {data.getAllGames.map((game: any) => (
-            <Box
-              key={game.id}
-              w="100%"
-              h="10"
-              p={5}
-              border="2px"
-              borderColor="gray"
-            >
-              {' '}
-              {game.title}{' '}
-            </Box>
+        <SimpleGrid columns={[2, null, 3]} spacing="20px" m={6}>
+          {data.getAllGames.map((game: Game) => (
+            <GameBox game={game} key={game.id} />
           ))}
         </SimpleGrid>
       )}
-    </div>
+    </Box>
   );
 }

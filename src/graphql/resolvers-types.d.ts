@@ -41,6 +41,7 @@ export type Game = {
   id: Scalars['ID'];
   title: Scalars['String'];
   price: Scalars['Float'];
+  imageUrl?: Maybe<Scalars['String']>;
   reviews: Array<Review>;
   averageRating?: Maybe<Scalars['Float']>;
 };
@@ -59,7 +60,6 @@ export type User = {
   __typename?: 'User';
   id: Scalars['ID'];
   name: Scalars['String'];
-  gamesInLibrary: Array<Game>;
   reviews: Array<Review>;
 };
 
@@ -67,8 +67,8 @@ export type User = {
 export type Mutation = {
   __typename?: 'Mutation';
   addGame: Game;
+  editGame: Game;
   addUser: User;
-  purchaseGame: User;
   addReview: Review;
 };
 
@@ -78,13 +78,13 @@ export type MutationAddGameArgs = {
 };
 
 
-export type MutationAddUserArgs = {
-  input: NewUserInput;
+export type MutationEditGameArgs = {
+  input: EditGameInput;
 };
 
 
-export type MutationPurchaseGameArgs = {
-  input: GamePurchaseInput;
+export type MutationAddUserArgs = {
+  input: NewUserInput;
 };
 
 
@@ -95,15 +95,18 @@ export type MutationAddReviewArgs = {
 export type NewGameInput = {
   title: Scalars['String'];
   price: Scalars['Float'];
+  imageUrl?: Maybe<Scalars['String']>;
+};
+
+export type EditGameInput = {
+  id: Scalars['ID'];
+  title?: Maybe<Scalars['String']>;
+  price?: Maybe<Scalars['Float']>;
+  imageUrl?: Maybe<Scalars['String']>;
 };
 
 export type NewUserInput = {
   name: Scalars['String'];
-};
-
-export type GamePurchaseInput = {
-  gameId: Scalars['ID'];
-  userId: Scalars['ID'];
 };
 
 export type NewReviewInput = {

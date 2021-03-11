@@ -90,10 +90,12 @@ export class ReviewResolver {
     });
     const game = this.gameService.findOne(gameId);
     if (!reviewer || !game) throw new Error('no game or user');
+    const existingReview = await this.review({ gameId, reviewerId });
+    if(existingReview) throw new Error('User has already reviewed this game.')
     const newReview = await this.reviewService.save({
       gameId,
       reviewerId,
-      rating,
+      rating: Math.min(Math.max(rating, 0), 5),
       comment
     });
     pubsub.publish(NEW_REVIEW_ADDED_EVENT, newReview);
