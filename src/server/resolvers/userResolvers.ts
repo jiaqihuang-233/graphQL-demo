@@ -2,7 +2,6 @@ import {
   Resolver,
   Query,
   Mutation,
-  ResolverInterface,
   Arg,
   InputType,
   Field,
@@ -12,7 +11,6 @@ import {
 } from 'type-graphql';
 import User from '../entity/User';
 import { getRepository, Repository } from 'typeorm';
-import Game from '../entity/Game';
 import Review from '../entity/Review';
 
 @InputType()
@@ -21,14 +19,6 @@ class NewUserInput {
   name: string;
 }
 
-@InputType()
-class GamePurchaseInput {
-  @Field(() => ID)
-  gameId: string;
-
-  @Field(() => ID)
-  userId: string;
-}
 
 @Resolver(() => User)
 export class UserResolver {
@@ -39,7 +29,7 @@ export class UserResolver {
   }
 
   @Query(() => User)
-  async user(@Arg('id', (type) => ID) id: string): Promise<User | undefined> {
+  async user(@Arg('id', () => ID) id: string): Promise<User | undefined> {
     return await this.userService.findOne(id);
   }
 
