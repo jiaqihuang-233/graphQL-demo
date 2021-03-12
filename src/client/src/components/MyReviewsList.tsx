@@ -10,9 +10,7 @@ export default function MyReviewsList() {
     <Box flexGrow={2} width="60%">
       {user && (
         <Stack
-          // divider={<StackDivider borderColor="gray" />}
           spacing={8}
-          // align="stretch"
           m={10}
         >
           {' '}

@@ -33,7 +33,7 @@ export default function GamesGrid() {
       )}
 
       {data && data.getAllGames && (
-        <SimpleGrid columns={[2, null, 3]} spacing="20px" m={6}>
+        <SimpleGrid columns={[2, null, 4]} spacing="20px" m={6}>
           {data.getAllGames.map((game: Game) => (
             <GameBox game={game} key={game.id} />
           ))}

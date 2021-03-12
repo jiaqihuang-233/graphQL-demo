@@ -24,7 +24,7 @@ export default function ReviewBox({ review, showReviewer, truncate }: ReviewBoxP
     >
       <Box>
         <Flex>
-          <Box m={2}>
+          <Box m={2} width="50%">
             <Image
               src={game.imageUrl || undefined}
               alt={game.title}
@@ -71,7 +71,7 @@ export default function ReviewBox({ review, showReviewer, truncate }: ReviewBoxP
             </Box>
           </Box>
         </Flex>
-        <Box p={2}>{ truncate ? (comment.substring(0, 150) + '...') : comment}</Box>
+        <Box p={6}>{ truncate ? (comment.substring(0, 150) + '...') : comment}</Box>
       </Box>
     </Flex>
   );
