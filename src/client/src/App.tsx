@@ -8,7 +8,7 @@ import NewReviewsList from './components/NewReviewsList';
 import TopNavBar from './components/TopNavBar';
 import GenerateReviews from './components/GenerateReviews';
 
-const currentUserId = '9674e69f-f971-4bc7-9aff-c02db3bec3c6';
+const currentUserId = '9daf2daa-b04a-44e6-b787-3381fe79d24f';
 
 export default function App() {
   return (

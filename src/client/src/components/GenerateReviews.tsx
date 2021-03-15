@@ -15,9 +15,9 @@ function randomIntFromInterval(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-export default function GenerateReviews () {
-  const [ games, setGames ] = useState<Game[]>([]);
-  
+export default function GenerateReviews() {
+  const [games, setGames] = useState<Game[]>([]);
+
   const GET_ALL_GAMES = gql`
     query GetAllGames {
       getAllGames {
@@ -66,32 +66,34 @@ export default function GenerateReviews () {
     }
   `;
 
-  const [ addUser ] = useMutation(ADD_USER_MUTATION);
-  const [ addReview ] = useMutation(ADD_REVIEW_MUTATION);
+  const [addUser] = useMutation(ADD_USER_MUTATION);
+  const [addReview] = useMutation(ADD_REVIEW_MUTATION);
 
   const generateReview = async () => {
-      if(!games) await delay(1000);
-      const name = faker.name.firstName();
-      const gameId = games[randomIntFromInterval(0, games.length - 1)].id;
-      const comment = comments[randomIntFromInterval(0, comments.length - 1)];
-      const { data } = await addUser({
-        variables: {
-          name
-        }
-      });
-      const { id: reviewerId } = data.addUser;
-      await addReview({
-        variables: {
-          reviewerId,
-          gameId,
-          rating: randomIntFromInterval(1, 5),
-          comment,
-        }
-      });
-  }
+    if (!games) await delay(1000);
+    const name = faker.name.firstName();
+    const gameId = games[randomIntFromInterval(0, games.length - 1)].id;
+    const comment = comments[randomIntFromInterval(0, comments.length - 1)];
+    const { data } = await addUser({
+      variables: {
+        name
+      }
+    });
+    const { id: reviewerId } = data.addUser;
 
+    await addReview({
+      variables: {
+        reviewerId,
+        gameId,
+        rating: randomIntFromInterval(1, 5),
+        comment
+      }
+    });
+  };
 
   return (
-      <Button m={40} onClick={generateReview}>Generate A Review</Button>
-  )
+    <Button m={40} onClick={generateReview}>
+      Generate A Review
+    </Button>
+  );
 }
