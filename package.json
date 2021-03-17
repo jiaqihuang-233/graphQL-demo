@@ -4,29 +4,22 @@
   "main": "index.js",
   "author": "Jackie Huang <jhuang@pdftron.com>",
   "license": "MIT",
-  "dependencies": {
-    "apollo-server-express": "^2.21.0",
-    "class-validator": "^0.13.1",
-    "express": "^4.17.1",
-    "graphql": "^15.5.0",
-    "graphql-redis-subscriptions": "^2.3.1",
-    "reflect-metadata": "^0.1.13",
-    "sqlite3": "^5.0.2",
-    "type-graphql": "^1.1.1",
-    "typeorm": "^0.2.31"
+    "dependencies": {
+    "graphql": "^15.5.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^1.21.2",
     "@graphql-codegen/typescript": "^1.21.1",
     "@types/express": "^4.17.11",
     "@types/node": "^14.14.31",
+    "lerna": "^3.22.1",
     "nodemon": "^2.0.7",
     "ts-node": "^9.1.1",
     "typescript": "^4.2.2"
   },
   "scripts": {
     "start-server": "nodemon --exec ts-node src/server/index.ts",
-    "start-client": "ts-node src/client/index.ts",
+    "start-client": "cd src/client && yarn start",
     "generate-types": "graphql-codegen"
   }
 }
