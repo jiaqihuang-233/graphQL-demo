@@ -1,6 +1,8 @@
 # GraphQL Demo
 A fullstack app for showing game reviews to demonstrate how to use GraphQL through schema-first development.
 
+Link to the slides - https://test-pdf-upload-01.s3.amazonaws.com/Schema_First_DEV_GQL.pdf
+
 ## Core Technologies
 - GraphQL
 - Apollo
